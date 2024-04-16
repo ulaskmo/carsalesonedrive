@@ -1,1 +1,28 @@
-<p>carlist works!</p>
+<div class="container my-3">
+  <button class="add-button" (click)="show = !show">{{ show ? 'Hide Form' : 'Add a Car' }}</button>
+  <div *ngIf="show" class="form-container">
+    <h5 class="form-title">Add a Car</h5>
+    <form>
+      <div class="form-group">
+        <label for="make">Make</label>
+        <input type="text" class="form-control" id="make" name="make" placeholder="Enter Make" #make>
+      </div>
+      <div class="form-group">
+        <label for="model">Model</label>
+        <input type="text" class="form-control" id="model" name="model" placeholder="Enter Model" #model>
+      </div>
+      <div class="form-group">
+        <label for="year">Year</label>
+        <input type="text" class="form-control" id="year" name="year" placeholder="Enter Year" #year>
+      </div>
+      <div class="form-group">
+        <label for="imageURL">Image URL</label>
+        <input type="text" class="form-control" id="imageURL" name="imageURL" placeholder="Enter Link to Image" #imageUrl>
+      </div>
+      <button class="submit-button" type="submit" (click)="addCar(make.value, model.value, year.value, imageUrl.value)">Add Car</button>
+    </form>
+  </div>
+</div>
+<div class="container mt-4">
+  <app-car *ngFor="let carData of carsData" [carData]="carData"></app-car>
+</div>
