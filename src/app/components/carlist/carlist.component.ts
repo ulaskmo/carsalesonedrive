@@ -18,24 +18,25 @@ export class CarlistComponent implements OnInit {
   constructor(private _carAPIService: CarApiService) {}
 
   ngOnInit() {
-    this.getCars()
+    this.getCars();
   }
 
   getCars() {
     this._carAPIService.getCarDetails().subscribe(carsData =>
-      { this.carsData = carsData
-    });
+      { this.carsData = carsData }
+    );
   }
 
   addCar(make:string, model:string, year:string,imageUrl:string):boolean {
     let addCar:ICar;
     addCar=new NewCar(make,model,year,imageUrl);
     this._carAPIService.addCarDetails(addCar).subscribe(carsData =>
-      { this.carsData = carsData}
+      { this.carsData = carsData }
     );
-
     return false;
   }
 
-
+  refreshCars(): void {
+    this.getCars();
+  }
 }

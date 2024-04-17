@@ -25,4 +25,5 @@
 </div>
 <div class="container mt-4">
   <app-car *ngFor="let carData of carsData" [carData]="carData"></app-car>
+  <app-car *ngFor="let car of carsData" [carData]="car" (carDeleted)="refreshCars()"></app-car>
 </div>

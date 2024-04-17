@@ -26,7 +26,10 @@ export class CarComponent {
         console.error(error);
       }
     );
+    this.doSomethingAfterDeletingCar();
   }
 
-
+  private doSomethingAfterDeletingCar(): void {
+    console.log("Car deleted successfully. Additional action performed.");
+  }
 }
