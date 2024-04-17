@@ -36,6 +36,18 @@ export class CarlistComponent implements OnInit {
     return false;
   }
 
+  deleteCar(carId: string): void {
+    this._carAPIService.delCarDetails(carId).subscribe(
+      (result) => {
+        console.log(result);
+        this.getCars();
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
   refreshCars(): void {
     this.getCars();
   }
