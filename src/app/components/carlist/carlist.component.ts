@@ -1,15 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Import CommonModule
-import { CarApiService } from '../../services/car-api.service'; // Import CarApiService
-import { ICar, NewCar } from '../../interfaces/car'; // Import ICar and NewCar
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CarApiService } from '../../services/car-api.service';
 import { CarComponent } from '../car/car.component';
+import { ICar, NewCar } from '../../interfaces/car';
 
 @Component({
   selector: 'app-carlist',
   standalone: true,
-  imports: [CarComponent, CommonModule],
   templateUrl: './carlist.component.html',
-  styleUrl: './carlist.component.css'
+  styleUrls: ['./carlist.component.css'],
+  imports: [CarComponent, CommonModule]
 })
 export class CarlistComponent implements OnInit {
   carsData: ICar[] = [];
@@ -17,22 +17,37 @@ export class CarlistComponent implements OnInit {
 
   constructor(private _carAPIService: CarApiService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getCars();
   }
 
-  getCars() {
-    this._carAPIService.getCarDetails().subscribe(carsData =>
-      { this.carsData = carsData }
+  toggleAddForm(): void {
+    this.show = !this.show;
+  }
+
+  getCars(): void {
+    this._carAPIService.getCarDetails().subscribe(
+      (carsData) => {
+        this.carsData = carsData;
+      },
+      (error) => {
+        console.error(error);
+      }
     );
   }
 
-  addCar(make:string, model:string, year:string,imageUrl:string):boolean {
-    let addCar:ICar;
-    addCar=new NewCar(make,model,year,imageUrl);
-    this._carAPIService.addCarDetails(addCar).subscribe(carsData =>
-      { this.carsData = carsData }
+  addCar(make: string, model: string, year: string, imageUrl: string): boolean {
+    const addCar: ICar = new NewCar(make, model, year, imageUrl);
+    this._carAPIService.addCarDetails(addCar).subscribe(
+      (newCar) => {
+        this.carsData = [...this.carsData, newCar];
+        this.getCars();
+      },
+      (error) => {
+        console.error(error);
+      }
     );
+    this.toggleAddForm();
     return false;
   }
 
@@ -46,9 +61,5 @@ export class CarlistComponent implements OnInit {
         console.error(error);
       }
     );
-  }
-
-  refreshCars(): void {
-    this.getCars();
   }
 }
