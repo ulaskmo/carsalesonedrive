@@ -8,7 +8,7 @@ import { ICar } from '../interfaces/car'; // Assuming ICAR is a typo and should 
   providedIn: 'root'
 })
 export class CarApiService {
-  private _siteURL: string = 'http://localhost:5050'; // Update the URL as needed
+  private _siteURL: string = 'http://localhost:5050/cars'; // Update the URL as needed
   private _http: HttpClient;
 
   constructor(private http: HttpClient) {
